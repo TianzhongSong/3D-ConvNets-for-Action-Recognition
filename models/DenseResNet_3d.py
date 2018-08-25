@@ -77,7 +77,7 @@ def dense_resnet_3d(nb_classes, input_shape, weight_decay=0.005, dropout_rate=0.
     x1 = conv_factory(x, 128, (1, 1, 2), (2, 2, 2), padding='valid')
 
     # stage 4
-    x = dense_block(x, 32, internal_layers=8,
+    x = dense_block(x, 64, internal_layers=4,
                    dropout_rate=dropout_rate)
     x = add([x, y])
     y = MaxPool3D((2, 2, 2), strides=(2, 2, 2), padding='same')(x)
@@ -86,7 +86,7 @@ def dense_resnet_3d(nb_classes, input_shape, weight_decay=0.005, dropout_rate=0.
     x2 = conv_factory(y, 128, (1, 1, 1), (1, 1, 1), padding='same')
 
     # stage 5
-    x = dense_block(y, 32, internal_layers=8,
+    x = dense_block(y, 64, internal_layers=4,
                    dropout_rate=dropout_rate)
     x = add([x, y])
     x = BatchNormalization(axis=-1, epsilon=1.1e-5)(x)
